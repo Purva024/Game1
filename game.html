@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WHO OWNS WHAT Puzzle Game</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playpen+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..72,400;12..72,700&family=Playpen+Sans&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      background-color: #4c708c;
+      font-family: 'Bricolage Grotesque', sans-serif;
+    }
+
+    nav {
+      background-color: #173b5c;
+      display: flex;
+      justify-content: right;
+      flex-wrap: wrap;
+      margin: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .nav-button {
+      background-color: #173b5c;
+      padding: 8px 20px;
+      min-width: 90px;
+      font-size: 17px;
+      font-weight: bold;
+      color: white;
+      border: none;
+      margin:12px;
+    }
+
+    img {
+      width: 100%;
+      margin: 52px 0px 0px 0px;
+      max-width: 100%;
+      height: auto;
+    }
+
+    #info {
+      max-width: 900px;
+      width: 90%;
+      margin: auto;
+    }
+
+    #about,#howto {
+      scroll-margin-top: 80px;
+      margin: 0;
+      background-color: #173b5c;
+      padding: 8px 20px;
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      width: 180px;
+      border-radius: 9px;
+      text-align: center;
+    }
+
+    .description {
+      color: white;
+      font-size: 20px;
+      padding: 10px 0 80px 0;
+    }
+
+    #readytoplay {
+      background-color: #173b5c;
+    }
+
+    #readytoplay1 {
+      width: 90%;
+      margin: auto;
+    }
+
+    #play {
+      scroll-margin-top: 30px;
+      margin: 0;
+      color: white;
+      padding: 80px 20px 40px 20px;
+      text-align: center;
+    }
+
+    #cards {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 30px;
+      text-align: center;
+      flex-wrap: wrap;
+      padding-bottom: 80px;
+    }
+
+    .levels {
+      background-color: #0f2542;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .levels:hover {
+      box-shadow: 3px 1px 30px #e7f6e7;
+    }
+
+    #easy, #medium, #hard {
+      width: auto;
+      padding: 0px 20px;
+    }
+
+    .text {
+      font-size: 23px;
+      font-weight: bold;
+      color: white;
+      padding-bottom: 20px;
+    }
+
+    .game {
+      background-color: #0f2542;
+      padding-bottom: 90px;
+    }
+
+    .game h1 {
+      font-size: 35px;
+      font-weight: bold;
+      color: white;
+      padding: 70px 40px 50px 40px;
+      text-align: center;
+    }
+
+    .question {
+      width: 90%;
+      margin: auto;
+      background-color: rgb(76, 112, 140, 0.5);
+      padding: 50px;
+      border-radius: 40px;
+    }
+
+    .question h3 {
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      padding: 20px 60px 0px 50px;
+      margin-bottom: 0px;
+      font-family: 'Playpen Sans', cursive;
+    }
+
+    .question p, ul {
+      font-size: 23px;
+      color: white;
+      padding: 10px 50px 0px 50px;
+      margin-top: 0%;
+      font-family: 'Playpen Sans', cursive;
+    }
+
+    table {
+      margin: 30px auto;
+      color: white;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    th, td {
+      border: none;
+      border-radius: 5px;
+      padding: 15px;
+      text-align: center;
+      width: 80px;
+      height: 50px;
+      font-size: 20px;
+      background-color: #0f2549;
+    }
+
+    td {
+      background-color: rgb(76, 112, 140, 0.6);
+    }
+
+    td:hover {
+      background-color: rgba(255,255,255, 0.5);
+    }
+
+    .cell.possible {
+      background-color: #e7f6e7;
+      color: green;
+    }
+
+    .cell.not-possible {
+      background-color: #fbeaea;
+      color: red;
+    }
+
+    .A-C {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40%;
+      text-align: center;
+      flex-wrap: wrap;
+      margin: 40px 0px;
+    }
+
+    .answer {
+      padding: 10px 15px;
+      background-color: #0f2542;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .answer:hover {
+      border: 1px solid white;
+    }
+
+    .clear {
+      padding: 10px 15px;
+      background-color: #0f2542;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+      border: none;
+      border-radius: 8px;
+    }
+
+    .clear:hover {
+      border: 1px solid white;
+    }
+
+    #result {
+      font-size: 20px;
+      color: white;
+    }
+
+    @media (max-width: 768px) {
+      .nav-button {
+        padding: 6px 10px;
+        font-size: 14px;
+        min-width: auto;
+        margin: 6px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .text, .description, .question h3, .question p {
+        font-size: 16px;
+      }
+
+      .A-C {
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      table th, table td {
+        font-size: 16px;
+        padding: 8px;
+        width: auto;
+      }
+
+      #cards {
+        flex-direction: column;
+      }
+
+      #play {
+        padding: 40px 10px 20px 10px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="#about" class="nav-link"><button class="nav-button">About</button></a>
+      <a href="#howto" class="nav-link"><button class="nav-button">How to</button></a>
+      <a href="#play" class="nav-link"><button class="nav-button">Play</button></a>
+    </nav>
+    <img src="https://i.postimg.cc/SxgFrsrJ/Thumbnails.png" alt="name of the game"/>
+  </header>
+  <section id="info">
+    <div id="about">About</div>
+    <p class="description">Hi! I'm a curious and creative developer who loves turning logic and code into fun, interactive experiences. I believe learning should be engaging — and what better way than through games? <br /> This project is a small step in my journey to combine storytelling, design, and programming into meaningful digital creations. With every line of code, I'm exploring how logic puzzles, visuals, and user interaction can come together to spark curiosity and challenge the mind.</p>
+    <div id="howto">How to play?</div>
+    <p class="description"> “Who owns What?” is a simple yet challenging logic game where your task is to figure out who owns which colored car based on a set of clues.<br />Use the clues to eliminate possibilities, mark correct matches, and solve the mystery — all with just a few clicks.<br /><br />Click 1: mark a possibility ✅<br />Click 2: rule out the possibility ❌<br />Click 3: resets the cell 🔄<br /><br />Each level gets a bit more interesting.</p>
+  </section>
+  <section id="readytoplay">
+    <div id="readytoplay1">
+      <h1 id="play">READY TO PLAY?</h1>
+      <div id="cards">
+        <button onclick="LevelEasy()" class="levels">
+            <img src="https://i.postimg.cc/pTZdYxpC/easy.jpg" alt="level-easy" id="easy"/>
+            <p class="text">Level: Easy</p>
+        </button>
+        <button onclick="LevelMedium()" class="levels">
+            <img src="https://i.postimg.cc/NFCfS48r/medium.jpg" alt="level-medium" id="medium"/>
+            <p class="text">Level: Medium</p>
+        </button>
+        <button onclick="LevelHard()" class="levels">
+            <img src="https://i.postimg.cc/QCddfP73/hard.jpg" alt="level-hard" id="hard"/>
+            <p class="text">Level: Hard</p>
+        </button>
+      </div>
+    </div>
+    <div id="game-easy" class="game">
+      <h1>Level: EASY</h1>
+      <div class="question">
+        <h3>Q: Who Owns Which Car?</h3>
+        <p>Clues:<br/>1.  P does not own blue or green<br/>2.  Q owns either red or green<br/>3.  S owns yellow</p>
+        <table>
+          <tr>
+            <th>Person</th>
+            <th>Red</th>
+            <th>Blue</th>
+            <th>Green</th>
+            <th>Yellow</th>
+          </tr>
+          <tr>
+            <th>P</th>
+            <td class="cell" id="easy-P-one"></td>
+            <td class="cell" id="easy-P-two"></td>
+            <td class="cell" id="easy-P-three"></td>
+            <td class="cell" id="easy-P-four"></td>
+          </tr>
+          <tr>
+            <th>Q</th>
+            <td class="cell" id="easy-Q-one"></td>
+            <td class="cell" id="easy-Q-two"></td>
+            <td class="cell" id="easy-Q-three"></td>
+            <td class="cell" id="easy-Q-four"></td>
+          </tr>
+          <tr>
+            <th>R</th>
+            <td class="cell" id="easy-R-one"></td>
+            <td class="cell" id="easy-R-two"></td>
+            <td class="cell" id="easy-R-three"></td>
+            <td class="cell" id="easy-R-four"></td>
+          </tr>
+          <tr>
+            <th>S</th>
+            <td class="cell" id="easy-S-one"></td>
+            <td class="cell" id="easy-S-two"></td>
+            <td class="cell" id="easy-S-three"></td>
+            <td class="cell" id="easy-S-four"></td>
+          </tr>
+        </table>
+        <div class="A-C">
+          <button class="answer" onclick="CheckAnswerEasy()">Check Answer</button>
+          <button class="clear" onclick="Reset()">Reset</button>
+          <p id="resulteasy"></p>
+        </div>
+      </div>
+    </div>
+    <div id="game-medium" class="game">
+      <h1>Level: Medium</h1>
+      <div class="question">
+        <h3>Q: Who Likes Which Fruit?</h3>
+        <p>Clues:<br/>1.  P does not like Apple or Banana.<br/>2.  Q likes Mango.<br/>3.  R likes either Apple or Orange.<br/>4.  S does not like Orange.</p>
+        <table>
+          <tr>
+            <th>Person</th>
+            <th>Apple</th>
+            <th>Banana</th>
+            <th>Orange</th>
+            <th>Mango</th>
+          </tr>
+          <tr>
+            <th>P</th>
+            <td class="cell" id="medium-P-one"></td>
+            <td class="cell" id="medium-P-two"></td>
+            <td class="cell" id="medium-P-three"></td>
+            <td class="cell" id="medium-P-four"></td>
+          </tr>
+          <tr>
+            <th>Q</th>
+            <td class="cell" id="medium-Q-one"></td>
+            <td class="cell" id="medium-Q-two"></td>
+            <td class="cell" id="medium-Q-three"></td>
+            <td class="cell" id="medium-Q-four"></td>
+          </tr>
+          <tr>
+            <th>R</th>
+            <td class="cell" id="medium-R-one"></td>
+            <td class="cell" id="medium-R-two"></td>
+            <td class="cell" id="medium-R-three"></td>
+            <td class="cell" id="medium-R-four"></td>
+          </tr>
+          <tr>
+            <th>S</th>
+            <td class="cell" id="medium-S-one"></td>
+            <td class="cell" id="medium-S-two"></td>
+            <td class="cell" id="medium-S-three"></td>
+            <td class="cell" id="medium-S-four"></td>
+          </tr>
+        </table>
+        <div class="A-C">
+          <button class="answer" onclick="CheckAnswerMedium()">Check Answer</button>
+          <button class="clear" onclick="Reset()">Reset</button>
+          <p id="resultmedium"></p>
+        </div>
+      </div>
+    </div>
+    <div id="game-hard" class="game">
+      <h1>Level: Hard</h1>
+      <div class="question">
+        <h3>Q: Who Owns Which Animal?</h3>
+        <p>Clues:<br/>1.  P owns a pet that has fur but is not a cat.<br/>2.  Q doesn’t like animals that fly.<br/>3.  R owns a pet that barks.<br/>4.  S is allergic to fur.</p>
+        <table>
+          <tr>
+            <th>Person</th>
+            <th>Dog</th>
+            <th>Cat</th>
+            <th>Rabbit</th>
+            <th>Parrot</th>
+          </tr>
+          <tr>
+            <th>P</th>
+            <td class="cell" id="hard-P-one"></td>
+            <td class="cell" id="hard-P-two"></td>
+            <td class="cell" id="hard-P-three"></td>
+            <td class="cell" id="hard-P-four"></td>
+          </tr>
+          <tr>
+            <th>Q</th>
+            <td class="cell" id="hard-Q-one"></td>
+            <td class="cell" id="hard-Q-two"></td>
+            <td class="cell" id="hard-Q-three"></td>
+            <td class="cell" id="hard-Q-four"></td>
+          </tr>
+          <tr>
+            <th>R</th>
+            <td class="cell" id="hard-R-one"></td>
+            <td class="cell" id="hard-R-two"></td>
+            <td class="cell" id="hard-R-three"></td>
+            <td class="cell" id="hard-R-four"></td>
+          </tr>
+          <tr>
+            <th>S</th>
+            <td class="cell" id="hard-S-one"></td>
+            <td class="cell" id="hard-S-two"></td>
+            <td class="cell" id="hard-S-three"></td>
+            <td class="cell" id="hard-S-four"></td>
+          </tr>
+        </table>
+        <div class="A-C">
+          <button class="answer" onclick="CheckAnswerHard()">Check Answer</button>
+          <button class="clear" onclick="Reset()">Reset</button>
+          <p id="resulthard"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script>
+    const cells = document.querySelectorAll('.cell');
+
+    var easy=document.getElementById("game-easy");
+    easy.style.display="none";
+    var medium=document.getElementById("game-medium");
+    medium.style.display="none";
+    var hard=document.getElementById("game-hard");
+    hard.style.display="none";
+
+    function LevelEasy()
+    {
+      if (easy.style.display==="none")
+        {
+          easy.style.display="block";
+          medium.style.display="none";
+          hard.style.display="none";
+        }
+      else
+        {
+          easy.style.display="none"
+        }
+    }
+    
+    function LevelMedium()
+    {
+      if (medium.style.display==="none")
+        {
+          medium.style.display="block";
+          easy.style.display="none";
+          hard.style.display="none";
+        }
+      else
+        {
+          medium.style.display="none"
+        }
+    }
+    
+    function LevelHard()
+    {
+      if (hard.style.display==="none")
+        {
+          hard.style.display="block";
+          easy.style.display="none";
+          medium.style.display="none";
+        }
+      else
+        {
+          hard.style.display="none"
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+      cells.forEach(cell => {
+        cell.dataset.state = "blank";
+
+        cell.addEventListener('click', () => {
+          switch (cell.dataset.state) {
+            case "blank":
+              cell.dataset.state = "possible";
+              cell.className = "cell possible";
+              cell.textContent = "✔️";
+              break;
+            case "possible":
+              cell.dataset.state = "not-possible";
+              cell.className = "cell not-possible";
+              cell.textContent = "❌";
+              break;
+            case "not-possible":
+              cell.dataset.state = "blank";
+              cell.className = "cell";
+              cell.textContent = "";
+              break;
+          }
+        });
+      });
+    });
+
+    function CheckAnswerEasy()
+    {
+      const correctAnswer = {
+            "P": "easy-P-one",
+            "Q": "easy-Q-three",
+            "R": "easy-R-two",
+            "S": "easy-S-four"
+        };
+      let isCorrect = true;
+      for (let person in correctAnswer) 
+        {
+          const cellId = correctAnswer[person];
+          const cell = document.getElementById(cellId);
+          if (cell.dataset.state !== "possible") 
+            {
+                isCorrect = false;
+                break;
+            }
+        }
+        document.getElementById("resulteasy").textContent = isCorrect
+            ? "✅ Correct! Great job!"
+            : "❌ Incorrect! Try again.";
+    }
+
+    function CheckAnswerMedium()
+    {
+      const correctAnswer = {
+            "P": "medium-P-three",
+            "Q": "medium-Q-four",
+            "R": "medium-R-one",
+            "S": "medium-S-two"
+        };
+      let isCorrect = true;
+      for (let person in correctAnswer) 
+        {
+          const cellId = correctAnswer[person];
+          const cell = document.getElementById(cellId);
+          if (cell.dataset.state !== "possible") 
+            {
+                isCorrect = false;
+                break;
+            }
+        }
+        document.getElementById("resultmedium").textContent = isCorrect
+            ? "✅ Correct! Great job!"
+            : "❌ Incorrect! Try again.";
+    }
+
+    function CheckAnswerHard()
+    {
+      const correctAnswer = {
+            "P": "hard-P-three",
+            "Q": "hard-Q-two",
+            "R": "hard-R-one",
+            "S": "hard-S-four"
+        };
+      let isCorrect = true;
+      for (let person in correctAnswer) 
+        {
+          const cellId = correctAnswer[person];
+          const cell = document.getElementById(cellId);
+          if (cell.dataset.state !== "possible") 
+            {
+                isCorrect = false;
+                break;
+            }
+        }
+        document.getElementById("resulthard").textContent = isCorrect
+            ? "✅ Correct! Great job!"
+            : "❌ Incorrect! Try again.";
+    }
+
+    function Reset()
+    {
+      cells.forEach(cell => {cell.dataset.state = "blank"; cell.className = "cell"; cell.textContent = ""; });
+      document.getElementById("resulteasy").style.display="none";
+      document.getElementById("resultmedium").style.display="none";
+      document.getElementById("resulthard").style.display="none";
+    }
+  </script>
+</body>
+</html>
