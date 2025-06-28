@@ -21,7 +21,7 @@
       top: 0;
       left: 0;
       width: 100%;
-      z-index: 1000;
+      z-index: 900;
     }
 
     .nav-button {
@@ -69,6 +69,7 @@
 
     #readytoplay {
       background-color: #173b5c;
+      width: 100%;
     }
 
     #readytoplay1 {
@@ -105,7 +106,7 @@
     }
 
     #easy, #medium, #hard {
-      width: auto;
+      width: 200px;
       padding: 0px 20px;
     }
 
@@ -129,8 +130,13 @@
       text-align: center;
     }
 
+    #game-easy, #game-medium, #game-hard {
+      scroll-margin-top: 50px;
+    }
+
     .question {
       width: 90%;
+      width: fit-content;
       margin: auto;
       background-color: rgb(76, 112, 140, 0.5);
       padding: 50px;
@@ -235,7 +241,7 @@
 
     @media (max-width: 768px) {
       .nav-button {
-        padding: 6px 10px;
+        padding: 6px 8px;
         font-size: 14px;
         min-width: auto;
         margin: 6px;
@@ -256,7 +262,7 @@
 
       table th, table td {
         font-size: 16px;
-        padding: 8px;
+        padding: 7px;
         width: auto;
       }
 
@@ -290,18 +296,24 @@
     <div id="readytoplay1">
       <h1 id="play">READY TO PLAY?</h1>
       <div id="cards">
-        <button onclick="LevelEasy()" class="levels">
+        <a href="#game-easy">
+          <button onclick="LevelEasy()" class="levels">
             <img src="https://i.postimg.cc/pTZdYxpC/easy.jpg" alt="level-easy" id="easy"/>
             <p class="text">Level: Easy</p>
-        </button>
-        <button onclick="LevelMedium()" class="levels">
+          </button>
+        </a>
+        <a href="#game-medium">
+          <button onclick="LevelMedium()" class="levels">
             <img src="https://i.postimg.cc/NFCfS48r/medium.jpg" alt="level-medium" id="medium"/>
             <p class="text">Level: Medium</p>
-        </button>
-        <button onclick="LevelHard()" class="levels">
+          </button>
+        </a>
+        <a href="#game-hard">
+          <button onclick="LevelHard()" class="levels">
             <img src="https://i.postimg.cc/QCddfP73/hard.jpg" alt="level-hard" id="hard"/>
             <p class="text">Level: Hard</p>
-        </button>
+          </button>
+        </a>
       </div>
     </div>
     <div id="game-easy" class="game">
@@ -540,16 +552,27 @@
             "S": "easy-S-four"
         };
       let isCorrect = true;
-      for (let person in correctAnswer) 
+      document.querySelectorAll(".cell").forEach(cell => 
+      {
+      const id = cell.id;
+
+      if (Object.values(correctAnswer).includes(id)) 
         {
-          const cellId = correctAnswer[person];
-          const cell = document.getElementById(cellId);
           if (cell.dataset.state !== "possible") 
             {
-                isCorrect = false;
-                break;
+              isCorrect = false;
             }
         }
+      else 
+        {
+          if (cell.dataset.state === "possible")
+            {
+              isCorrect = false;
+            }
+        }
+      });
+
+      document.getElementById("resulteasy").style.display="block";
         document.getElementById("resulteasy").textContent = isCorrect
             ? "✅ Correct! Great job!"
             : "❌ Incorrect! Try again.";
@@ -564,16 +587,27 @@
             "S": "medium-S-two"
         };
       let isCorrect = true;
-      for (let person in correctAnswer) 
+      document.querySelectorAll(".cell").forEach(cell => 
+      {
+      const id = cell.id;
+
+      if (Object.values(correctAnswer).includes(id)) 
         {
-          const cellId = correctAnswer[person];
-          const cell = document.getElementById(cellId);
           if (cell.dataset.state !== "possible") 
             {
-                isCorrect = false;
-                break;
+              isCorrect = false;
             }
         }
+      else 
+        {
+          if (cell.dataset.state === "possible")
+            {
+              isCorrect = false;
+            }
+        }
+      });
+
+      document.getElementById("resultmedium").style.display="block";
         document.getElementById("resultmedium").textContent = isCorrect
             ? "✅ Correct! Great job!"
             : "❌ Incorrect! Try again.";
@@ -588,19 +622,29 @@
             "S": "hard-S-four"
         };
       let isCorrect = true;
-      for (let person in correctAnswer) 
+
+      document.querySelectorAll(".cell").forEach(cell => 
+      {
+      const id = cell.id;
+
+      if (Object.values(correctAnswer).includes(id)) 
         {
-          const cellId = correctAnswer[person];
-          const cell = document.getElementById(cellId);
           if (cell.dataset.state !== "possible") 
             {
-                isCorrect = false;
-                break;
+              isCorrect = false;
             }
         }
-        document.getElementById("resulthard").textContent = isCorrect
-            ? "✅ Correct! Great job!"
-            : "❌ Incorrect! Try again.";
+      else 
+        {
+          if (cell.dataset.state === "possible")
+            {
+              isCorrect = false;
+            }
+        }
+      });
+
+      document.getElementById("resulthard").style.display="block";
+      document.getElementById("resulthard").textContent = isCorrect ? "✅ Correct! Great job!" : "❌ Incorrect! Try again.";
     }
 
     function Reset()
