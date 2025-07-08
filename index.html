@@ -135,8 +135,7 @@
     }
 
     .question {
-      width: 90%;
-      width: fit-content;
+      width: fit-content; 
       margin: auto;
       background-color: rgb(76, 112, 140, 0.5);
       padding: 50px;
@@ -214,6 +213,7 @@
       color: white;
       border: none;
       border-radius: 8px;
+      transition: background 0.4s, color 0.3s;
     }
 
     .answer:hover {
@@ -228,6 +228,7 @@
       color: white;
       border: none;
       border-radius: 8px;
+      transition: background 0.4s, color 0.3s;
     }
 
     .clear:hover {
@@ -261,8 +262,8 @@
       }
 
       table th, table td {
-        font-size: 16px;
-        padding: 7px;
+        font-size: 12px;
+        padding: 3px;
         width: auto;
       }
 
@@ -485,7 +486,7 @@
         }
       else
         {
-          easy.style.display="none"
+          easy.style.display="none";
         }
     }
     
@@ -499,7 +500,7 @@
         }
       else
         {
-          medium.style.display="none"
+          medium.style.display="none";
         }
     }
     
@@ -513,7 +514,7 @@
         }
       else
         {
-          hard.style.display="none"
+          hard.style.display="none";
         }
     }
 
@@ -543,109 +544,55 @@
       });
     });
 
-    function CheckAnswerEasy()
-    {
-      const correctAnswer = {
-            "P": "easy-P-one",
-            "Q": "easy-Q-three",
-            "R": "easy-R-two",
-            "S": "easy-S-four"
-        };
-      let isCorrect = true;
-      document.querySelectorAll("#game-easy .cell").forEach(cell => 
-      {
+    function checkAnswer(levelId, correctAnswer, resultId) {
+    let isCorrect = true;
+    document.querySelectorAll(`#${levelId} .cell`).forEach(cell => {
       const id = cell.id;
-
-      if (Object.values(correctAnswer).includes(id)) 
-        {
-          if (cell.dataset.state !== "possible") 
-            {
-              isCorrect = false;
-            }
+      if (Object.values(correctAnswer).includes(id)) {
+        if (cell.dataset.state !== "possible") {
+          isCorrect = false;
         }
-      else 
-        {
-          if (cell.dataset.state === "possible")
-            {
-              isCorrect = false;
-            }
+      } else {
+        if (cell.dataset.state === "possible") {
+          isCorrect = false;
         }
-      });
+      }
+    });
 
-      document.getElementById("resulteasy").style.display="block";
-        document.getElementById("resulteasy").textContent = isCorrect
-            ? "✅ Correct! Great job!"
-            : "❌ Incorrect! Try again.";
-    }
+    const result = document.getElementById(resultId);
+    result.style.display = "block";
+    result.textContent = isCorrect ? "✅ Correct! Great job!" : "❌ Incorrect! Try again.";
+  }
 
-    function CheckAnswerMedium()
-    {
-      const correctAnswer = {
-            "P": "medium-P-three",
-            "Q": "medium-Q-four",
-            "R": "medium-R-one",
-            "S": "medium-S-two"
-        };
-      let isCorrect = true;
-      document.querySelectorAll("#game-medium .cell").forEach(cell => 
-      {
-      const id = cell.id;
+  // Easy Answer Checker
+  function CheckAnswerEasy() {
+    checkAnswer("game-easy", {
+      "P": "easy-P-one",
+      "Q": "easy-Q-three",
+      "R": "easy-R-two",
+      "S": "easy-S-four"
+    }, "resulteasy");
+  }
 
-      if (Object.values(correctAnswer).includes(id)) 
-        {
-          if (cell.dataset.state !== "possible") 
-            {
-              isCorrect = false;
-            }
-        }
-      else 
-        {
-          if (cell.dataset.state === "possible")
-            {
-              isCorrect = false;
-            }
-        }
-      });
+  // Medium Answer Checker
+  function CheckAnswerMedium() {
+    checkAnswer("game-medium", {
+      "P": "medium-P-three",
+      "Q": "medium-Q-four",
+      "R": "medium-R-one",
+      "S": "medium-S-two"
+    }, "resultmedium");
+  }
 
-      document.getElementById("resultmedium").style.display="block";
-        document.getElementById("resultmedium").textContent = isCorrect
-            ? "✅ Correct! Great job!"
-            : "❌ Incorrect! Try again.";
-    }
-
-    function CheckAnswerHard()
-    {
-      const correctAnswer = {
-            "P": "hard-P-three",
-            "Q": "hard-Q-two",
-            "R": "hard-R-one",
-            "S": "hard-S-four"
-        };
-      let isCorrect = true;
-
-      document.querySelectorAll("#game-hard .cell").forEach(cell => 
-      {
-      const id = cell.id;
-
-      if (Object.values(correctAnswer).includes(id)) 
-        {
-          if (cell.dataset.state !== "possible") 
-            {
-              isCorrect = false;
-            }
-        }
-      else 
-        {
-          if (cell.dataset.state === "possible")
-            {
-              isCorrect = false;
-            }
-        }
-      });
-
-      document.getElementById("resulthard").style.display="block";
-      document.getElementById("resulthard").textContent = isCorrect ? "✅ Correct! Great job!" : "❌ Incorrect! Try again.";
-    }
+  // Hard Answer Checker
+  function CheckAnswerHard() {
+    checkAnswer("game-hard", {
+      "P": "hard-P-three",
+      "Q": "hard-Q-two",
+      "R": "hard-R-one",
+      "S": "hard-S-four"
+    }, "resulthard");
+  }
 
     function Reset()
     {
