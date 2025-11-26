@@ -1,7 +1,7 @@
 <h1>Who Owns What - Puzzle Game</h1>
 "Who Owns What" is a puzzle game made with HTML and CSS for responsive web design and JavaScript for the core logic to identify correct answers. The game challenges users to deduce correct combinations based on clues.
 Each level introduces new constraints, making the puzzle progressively more interesting!
-<br>
+<br><br>
 Actions:
 <ul>
 <li>On cell</li>
